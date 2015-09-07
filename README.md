@@ -1,7 +1,22 @@
 # iptables
 # tạm thời là note các ý chính
 
-phần ví dụ về snat ( ping từ lan ra wan) :
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+phần ví dụ về snat ( 1 kiểu ping từ lan ra wan chứ không phải là kỹ thuật giúp ping từ lan ra wan, ở đây có thể hiểu là nó giúp cho local truy nhập được ra ngoài internet, mà internet là môi trường mở nên khi ta ping đến một địa chỉ thuộc mạng wan thì nó giống như kiểu ta truy nhập vào 1 dịch vụ nào đó trên internet ví dụ như web,mail...):
 
 SNAT & MASQUERADE
 Để tạo kết nối `transparent` giữa mạng LAN 192.168.0.1 với Internet bạn lập cấu hình cho tường lửa Iptables như sau:
@@ -11,7 +26,7 @@ Hoặc bạn có thể dùng MASQUERADE thay cho SNAT như sau:
 # iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
 (MASQUERADE thường được dùng khi kết nối đến Internet là pp0 và dùng địa chỉ IP động)
 
-phần ví dụ về DNAT ( ping từ wan vào lan ):
+phần ví dụ về DNAT ( lúc đầu tôi nghĩ snat là 1 kiểu kỹ thuật giúp ta ping được từ lan ra wan và rôi áp suy nghĩ đó vào dnat nhưng không được thì tôi mới biết là mình đã nhâm, DNAT là kỹ thuật giúp chúng ta public các dịch vụ trong local ra ngoài hoặc cho phép mạng bên ngoài truy nhập đến được nhưng thông qua các port ví dụ như, dịch vụ web chẳng hạn cổng 80...):
 
 DNAT
 Giả sử bạn đặt các máy chủ Proxy, Mail và DNS trong mạng DMZ. Để tạo kết nối trong suốt từ Internet vào các máy chủ này bạn là như sau:
