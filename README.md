@@ -26,7 +26,7 @@ Hoặc bạn có thể dùng MASQUERADE thay cho SNAT như sau:
 # iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
 (MASQUERADE thường được dùng khi kết nối đến Internet là pp0 và dùng địa chỉ IP động)
 
-phần ví dụ về DNAT ( lúc đầu tôi nghĩ snat là 1 kiểu kỹ thuật giúp ta ping được từ lan ra wan và rôi áp suy nghĩ đó vào dnat nhưng không được thì tôi mới biết là mình đã nhâm, DNAT là kỹ thuật giúp chúng ta public các dịch vụ trong local ra ngoài hoặc cho phép mạng bên ngoài truy nhập đến được nhưng thông qua các port ví dụ như, dịch vụ web chẳng hạn cổng 80...):
+phần ví dụ về DNAT ( lúc đầu tôi nghĩ snat là 1 kiểu kỹ thuật giúp ta ping được từ lan ra wan và rôi áp suy nghĩ đó vào dnat nhưng không được thì tôi mới biết là mình đã nhâm, DNAT là kỹ thuật giúp chúng ta public các dịch vụ trong local ra ngoài hoặc cho phép mạng bên ngoài truy nhập đến được nhưng thông qua các port ví dụ như, dịch vụ web chẳng hạn cổng 80 -- 172.16.1.130:80 ...):
 
 DNAT
 Giả sử bạn đặt các máy chủ Proxy, Mail và DNS trong mạng DMZ. Để tạo kết nối trong suốt từ Internet vào các máy chủ này bạn là như sau:
