@@ -2,17 +2,35 @@
 # tạm thời là note các ý chính
 
 
-Bảng filter
+##### a. Bảng filter
 
 Trong bảng filter có các chain được xây dựng sẵn:
 irewall
 -  chain INPUT: đây là chain dùng để lọc các gói tin vào firewall
- - Chain OUTPUT: đây là chain dùng để lọc các gói tin ra firewall
- - Chain FORWARD : đây là chain dùng để chuyển gói tin qua lại giữa các card mạng với nhau. ( ở đây tôi hiểu là nếu là hệ thống 1-1 thì có lẽ không cần thiết, còn nếu là hệ thống  PC1--firewall--PC2 thì nếu chỉ có INPUT HAY OUTPUT thì giữa 2 máy PC vẫn chưa trao đổi với nhau được mà phải thông qua chain này).
+- Chain OUTPUT: đây là chain dùng để lọc các gói tin ra firewall
+- Chain FORWARD : đây là chain dùng để chuyển gói tin qua lại giữa các card mạng với nhau. ( ở đây tôi hiểu là nếu là hệ thống 1-1 thì có lẽ không cần thiết, còn nếu là hệ thống  PC1--firewall--PC2 thì nếu chỉ có INPUT HAY OUTPUT thì giữa 2 máy PC vẫn chưa trao đổi với nhau được mà phải thông qua chain này).
 
 NOte: bạn nên hiểu thế này firewall giống 1 cái hộp đen khi các packet đi vào sẽ được chứa trong nó rồi tùy bạn quyết định sẽ làm gì với các packet trong đó. 
 Các target được sử dụng trong các chain này có thể là ACCEPT (đồng ý) , DROP (xóa bỏ)
 
+
+
+##### b. Bảng NAT
+Trong bảng NAT có các **chain** và có 3 chain được xây dựng sẵn trong table NAT:
+- **Chain** PREROUTING : đấy là chain dùng để thay đổi địa chỉ đích của gói tin và trong chain FREROUTING target(tác vụ) được sử dụng là DNAT (destination NAT):
+VD:
+```
+# iptables -t NAT -A PREROUTING -p tcp --dport 80 -j DNAT --to-destination 10.0.30.100:80
+```
+Câu lệnh này có ý nghĩa. Đối với gói tin tcp có port đích là 80 thì sẽ được đổi địa chỉ đích thành 10.0.30.100
+ví dụ trên đã định nghĩa rõ cho chúng ta:nói ra chọn bảng NAT áp dụng rule và trong chain PREROUTING sử dụng target DNAT.
+
+- **Chain** POSROUTING : đây là chain dùng để thay đổi địa chỉ nguồn của gói tin và targer được sư dụng là SNAT (source NAT) 
+VD:
+```
+#iptables -t NAT -A POSTROUTING -p tcp -j SNAT --to-source 10.0.30.200
+```
+Câu lệnh này có ý nghĩa đổi địa chỉ nguồn đối với gói tin tcp thành 10.0.30.200
 
 
 
