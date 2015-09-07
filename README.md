@@ -2,6 +2,17 @@
 # tạm thời là note các ý chính
 
 
+Bảng filter
+
+Trong bảng filter có các chain được xây dựng sẵn:
+irewall
+-  chain INPUT: đây là chain dùng để lọc các gói tin vào firewall
+ - Chain OUTPUT: đây là chain dùng để lọc các gói tin ra firewall
+ - Chain FORWARD : đây là chain dùng để chuyển gói tin qua lại giữa các card mạng với nhau. ( ở đây tôi hiểu là nếu là hệ thống 1-1 thì có lẽ không cần thiết, còn nếu là hệ thống  PC1--firewall--PC2 thì nếu chỉ có INPUT HAY OUTPUT thì giữa 2 máy PC vẫn chưa trao đổi với nhau được mà phải thông qua chain này).
+
+NOte: bạn nên hiểu thế này firewall giống 1 cái hộp đen khi các packet đi vào sẽ được chứa trong nó rồi tùy bạn quyết định sẽ làm gì với các packet trong đó. 
+Các target được sử dụng trong các chain này có thể là ACCEPT (đồng ý) , DROP (xóa bỏ)
+
 
 
 
