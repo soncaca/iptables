@@ -11,6 +11,7 @@ irewall
 - Chain FORWARD : đây là chain dùng để chuyển gói tin qua lại giữa các card mạng với nhau. ( ở đây tôi hiểu là nếu là hệ thống 1-1 thì có lẽ không cần thiết, còn nếu là hệ thống  PC1--firewall--PC2 thì nếu chỉ có INPUT HAY OUTPUT thì giữa 2 máy PC vẫn chưa trao đổi với nhau được mà phải thông qua chain này).
 
 NOte: bạn nên hiểu thế này firewall giống 1 cái hộp đen khi các packet đi vào sẽ được chứa trong nó rồi tùy bạn quyết định sẽ làm gì với các packet trong đó. 
+
 Các target được sử dụng trong các chain này có thể là ACCEPT (đồng ý) , DROP (xóa bỏ)
 
 
@@ -32,7 +33,7 @@ VD:
 ```
 Câu lệnh này có ý nghĩa đổi địa chỉ nguồn đối với gói tin tcp thành 10.0.30.200
 
-
+- **Chain** OUTPUT : ít dùng nên bỏ qua
 
 
 
