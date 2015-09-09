@@ -1,6 +1,7 @@
 # iptables
 # tạm thời là note các ý chính
 
+##Quan trọng: Lúc đầu lơ mơ,nhưng sau đó tôi nhận ra điều mà tôi thấy là quan trọng :D. Đó là lấy firewall làm trung tâm tức là khi triển khai chúng ta sẽ chỉ quan tâm đến các interface của nó rồi từ đó sẽ đặt vấn đế, hướng quan tâm của mình theo mô hình mà mình cần.
 
 ##### a. Bảng filter
 
@@ -49,6 +50,7 @@ Câu lệnh này có ý nghĩa đổi địa chỉ nguồn đối với gói tin
 phần ví dụ về snat ( 1 kiểu ping từ lan ra wan chứ không phải là kỹ thuật giúp ping từ lan ra wan, ở đây có thể hiểu là nó giúp cho local truy nhập được ra ngoài internet, mà internet là môi trường mở nên khi ta ping đến một địa chỉ thuộc mạng wan thì nó giống như kiểu ta truy nhập vào 1 dịch vụ nào đó trên internet ví dụ như web,mail...):
 
 SNAT & MASQUERADE
+
 Để tạo kết nối `transparent` giữa mạng LAN 192.168.0.1 với Internet bạn lập cấu hình cho tường lửa Iptables như sau:
 # echo 1 > /proc/sys/net/ipv4/ip_forward cho phép forward các packet qua máy chủ đặt Iptables
 # iptables -t nat -A POSTROUTING -o eth0 -j SNAT –to-source 210.40.2.71 đổi IP nguồn cho các packet ra card mạng eth0 là 210.40.2.71. Khi nhận được packet vào từ Internet, Iptables sẽ tự động đổi IP đích 210.40.2.71 thành IP đích tương ứng của máy tính trong mạng LAN 192.168.0/24.
@@ -59,13 +61,14 @@ Hoặc bạn có thể dùng MASQUERADE thay cho SNAT như sau:
 phần ví dụ về DNAT ( lúc đầu tôi nghĩ snat là 1 kiểu kỹ thuật giúp ta ping được từ lan ra wan và rôi áp suy nghĩ đó vào dnat nhưng không được thì tôi mới biết là mình đã nhâm, DNAT là kỹ thuật giúp chúng ta public các dịch vụ trong local ra ngoài hoặc cho phép mạng bên ngoài truy nhập đến được nhưng thông qua các port ví dụ như, dịch vụ web chẳng hạn cổng 80 -- 172.16.1.130:80 ...):
 
 DNAT
+
 Giả sử bạn đặt các máy chủ Proxy, Mail và DNS trong mạng DMZ. Để tạo kết nối trong suốt từ Internet vào các máy chủ này bạn là như sau:
 # echo 1 > /proc/sys/net/ipv4/ip_forward
 # iptables -t nat -A PREROUTING -i eth0 -p tcp –dport 80 -j DNAT –to-destination 192.168.1.2
 # iptables -t nat -A PREROUTING -i eth0 -p tcp –dport 25 -j DNAT –to-destination 192.168.1.3
 # iptables -t nat -A PREROUTING -i eth0 -p udp –dport 53 -j DNAT –to-destination 192.168.1.4
 
-prerouting: ( DNAT for incoming traffic ) tức là khi từ mạng ngoài eth0 muốn truy nhập vào mạng local thì nó sẽ ánh xạ địa chỉ ( -j DNAT --to-destination ip_local) wan tới địa chỉ local
+
 
 postrouting: tức là định tuyến xong rôi sẽ nat địa chỉ cho phù hợp với bảng định tuyến của firewall ( ví dụ: địa chỉ ở eth1 sẽ kiểu như routing với eth0 rồi từ đấy nó sẽ ra internet thông qua [nat qua] eth0)
 
